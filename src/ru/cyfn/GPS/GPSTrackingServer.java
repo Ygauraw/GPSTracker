@@ -76,8 +76,9 @@ class ClientHandler implements Runnable {
 		int message;
 		try {
 			while((message = in.read()) != -1) {
-				buffer[index++] = (char)message;
-				if(message == 0x0A) break;
+				buffer[index] = (char)message;
+				if(message == 0x0A && index > 0 && buffer[index-1] == 0x0D) break;
+				index++;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
