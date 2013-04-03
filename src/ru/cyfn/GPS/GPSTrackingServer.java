@@ -45,7 +45,7 @@ class ClientHandler implements Runnable {
 		char[] message;
 		while (!clientSocket.isClosed() && (message = readPacket()) != null) {
 			printArray(message);
-			GPSDataPacket packet = new GPSDataPacket(message);
+			GPSDataPackage packet = new GPSDataPackage(message);
 			//System.out.println(packet.isValid());
 			if(packet.getType() == 0x01) {
 				OutputStreamWriter out;
@@ -102,7 +102,21 @@ class ClientHandler implements Runnable {
 	}
 }
 
-class GPSDataPacket {
+enum GPSDataPackageType {
+	LOGIN(0x01);
+	
+	private int typeCode;
+	GPSDataPackageType(int type) {
+		typeCode = type;
+	}
+	public int getTypeCode() {
+		return typeCode;
+	}
+}
+
+class GPSDataPackage {
+	
+	public static final int LOGIN_PKG = 0x01;
 	
 	int packageType;
 	char[] serialNumber = new char[2];
@@ -126,7 +140,7 @@ class GPSDataPacket {
 		return Arrays.copyOf(rawContent, rawContent.length);
 	}
 	
-	public GPSDataPacket(char[] data) {
+	public GPSDataPackage(char[] data) {
 		rawContent = data;
 		validPacket = isPacketValid(rawContent);
 		if(validPacket) {
