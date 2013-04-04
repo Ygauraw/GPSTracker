@@ -34,7 +34,7 @@ class ClientHandler implements Runnable {
 	public ClientHandler(Socket socket) {
 		try {
 			clientSocket = socket;
-			in = new GPSDataReader(new BufferedInputStream(clientSocket.getInputStream()));
+			in = new GPSDataReader(new BufferedReader(new InputStreamReader(clientSocket.getInputStream())));
 			System.out.println("Connection from IP: " + clientSocket.getInetAddress().getHostAddress());
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -45,6 +45,7 @@ class ClientHandler implements Runnable {
 		GPSDataPackage packet;
 		try {
 			while (!clientSocket.isClosed() && (packet = in.readGPSData()) != null) {
+				System.out.print("In: ");
 				printArray(packet.getRawContent());
 				respond(packet);
 			}
@@ -66,6 +67,7 @@ class ClientHandler implements Runnable {
 				LOGIN_RESPONSE[7] = (char)(crc & 0xFF);
 				out.write(LOGIN_RESPONSE);
 				out.flush();
+				System.out.print("Out: ");
 				printArray(LOGIN_RESPONSE);
 				//out.close();
 			} catch (IOException e) {
@@ -101,12 +103,13 @@ class GPSDataPackage {
 	public static final List<Integer> validTypes = 
 		    Collections.unmodifiableList(Arrays.asList(LOGIN_PKG, STATUS_PKG));
 	
-	int packageType;
-	char[] serialNumber = new char[2];
-	int crc;
-	private boolean validPacket;
+	private int packageType;
+	private char[] serialNumber = new char[2];
+	private boolean validCRC;
 	private char[] rawContent;
+	private GPSDataContent dataContent;
 	
+	// !!! delete this method after implementing createResponse()
 	public char[] getSerialNumber() {
 		return Arrays.copyOf(serialNumber, serialNumber.length);
 	}
@@ -116,7 +119,7 @@ class GPSDataPackage {
 	}
 	
 	public boolean isValid() {
-		return validPacket;
+		return validCRC;
 	}
 	
 	public char[] getRawContent() {
@@ -124,25 +127,37 @@ class GPSDataPackage {
 	}
 	
 	public GPSDataPackage(char[] data) {
-		rawContent = data;
-		validPacket = isPacketValid(rawContent);
-		if(validPacket) {
+		rawContent = Arrays.copyOf(data, data.length);
+		validCRC = isPacketValid(rawContent);
+		if(validCRC) {
 			packageType = rawContent[3];
 			serialNumber[0] = rawContent[rawContent.length-6];
 			serialNumber[1] = rawContent[rawContent.length-5];
+			dataContent = constructDataContent(packageType, Arrays.copyOfRange(rawContent, 4, rawContent.length - 6));
 		}
 	}
 	
+	private GPSDataContent constructDataContent(int type, char[] data) {
+		GPSDataContent result = null;
+		
+		switch (type) {
+		case LOGIN_PKG:
+			result = new LoginData(data);
+			break;
+		}
+		return result;
+	}
+	
+	public GPSDataPackage createResponse() {
+		// construct and return appropriate response for current package type
+		return null;
+	}
+	
 	private boolean isPacketValid(char[] data) {
-		if(data.length <= 10) return false;
-		if(data[0] != 0x78) return false;
-		if(data[1] != 0x78) return false;
-		int pkgLength = data[2];
-		if(data.length != pkgLength+5) return false;
-		if(data[data.length-1] != 0x0A) return false;
-		if(data[data.length-2] != 0x0D) return false;
-		System.out.println(String.format("0x%X", CRC.getCRC(Arrays.copyOfRange(data, 2, data.length-4))));
-		return true;
+		int crc = CRC.getCRC(Arrays.copyOfRange(data, 2, data.length-4));
+		if(data[data.length-3] == (crc & 0xFF) && data[data.length-4] == (crc>>>8))
+			return true;
+		return false;
 	}
 }
 
