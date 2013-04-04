@@ -35,8 +35,8 @@ public class GPSClientEmulator {
 
 	private void setUpNetworking() {
 		try {
-			sock = new Socket("183.60.142.137", 8827);					// coomix free GPS tracking service
-			//sock = new Socket("127.0.0.1", 5000);						// local server
+			//sock = new Socket("183.60.142.137", 8827);					// coomix free GPS tracking service
+			sock = new Socket("127.0.0.1", 5000);						// local server
 			InputStreamReader streamReader = new InputStreamReader(
 					sock.getInputStream());
 			reader = new BufferedReader(streamReader);
