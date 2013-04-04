@@ -1,11 +1,13 @@
 package ru.cyfn.GPS;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class GPSDataReader extends FilterInputStream {
 
 	private static int BUFFER_SIZE = 255;
 	char[] buffer;
+	int index;
 	
 	protected GPSDataReader(InputStream in) {
 		super(in);
@@ -15,7 +17,7 @@ public class GPSDataReader extends FilterInputStream {
 		
 		buffer = new char[BUFFER_SIZE];
 		int data;
-		int index = 0;
+		index = 0;
 		int start = -1;
 		int type = 0;
 		int end = BUFFER_SIZE;
@@ -28,9 +30,9 @@ public class GPSDataReader extends FilterInputStream {
 				end = start + buffer[index - 1] + 5;
 				type = buffer[index - 2];
 			}
-			if(index == end) {									// if end reached
+			if(index == end-1) {									// if end reached
 				if(hasValidStopBits()) {							// and it contains valid stop bits
-					return createGPSDataPackage(type,start,end); // create an appropriate pkg
+					return createGPSDataPackage(type,Arrays.copyOfRange(buffer, start, end)); // create an appropriate pkg
 				} else {										// else reset start and end positions
 					start = -1;
 					end = BUFFER_SIZE;
@@ -43,18 +45,26 @@ public class GPSDataReader extends FilterInputStream {
 		return null;
 	}
 
-	private GPSDataPackage createGPSDataPackage(int type, int start, int end) {
-		// TODO Check CRC and create appropriate GPSDataPackage
-		return null;
+	private GPSDataPackage createGPSDataPackage(int type, char[] data) {
+		// TODO Create appropriate GPSDataPackage
+		return new GPSDataPackage(data);
 	}
 
 	private boolean hasValidStopBits() {
 		// TODO Check last 2 buffer elements for 0xD,0xA
+		if(index>0) {
+			if(buffer[index] == 0xA && buffer[index-1] == 0xD)
+				return true;
+		}
 		return false;
 	}
 
 	private boolean hasValidStartBits() {
 		// TODO Check last 4 buffer elements for 78,78,??,valid type code
+		if(index>2) {
+			if(buffer[index-3] == 0x78 && buffer[index-2] == 0x78)
+				return true;
+		}
 		return false;
 	}
 
