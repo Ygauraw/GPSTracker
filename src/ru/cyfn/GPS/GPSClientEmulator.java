@@ -5,9 +5,11 @@ import java.net.*;
 
 public class GPSClientEmulator {
 
-	static public char[] LOGIN_PKG = { 0x78,0x78,0x11,0x1,0x8,0x64,0x71,0x70,0x3,0x64,0x79,0x59,0x10,0x12,0x19,0x2,0x3,0x3B,0x201C,0xA0,0xD,0xA };
+	static public char[] LOGIN_PKG = { 
+		0x78,0x78,0x11,0x1,0x8,0x64,0x71,0x70,0x3,0x64,0x79,0x59,0x10,0x12,0x19,0x2,0x8,0xEF,0x7A,0x16,0xD,0xA 
+		};
 
-	BufferedReader reader;
+	BufferedInputStream reader;
 	OutputStreamWriter writer;
 	Socket sock;
 	
@@ -37,9 +39,10 @@ public class GPSClientEmulator {
 		try {
 			//sock = new Socket("183.60.142.137", 8827);					// coomix free GPS tracking service
 			sock = new Socket("127.0.0.1", 5000);						// local server
-			InputStreamReader streamReader = new InputStreamReader(
-					sock.getInputStream());
-			reader = new BufferedReader(streamReader);
+			//InputStreamReader streamReader = new InputStreamReader(
+			//		sock.getInputStream());
+			//reader = new BufferedReader(streamReader);
+			reader = new BufferedInputStream(sock.getInputStream());
 			writer = new OutputStreamWriter(sock.getOutputStream());
 			System.out.println("networking established");
 		} catch (IOException ex) {

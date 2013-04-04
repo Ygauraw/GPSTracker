@@ -41,7 +41,6 @@ public abstract class CRC {
 	{
 		int crc = 0xFFFF; // Initialize
 		int dataIndex = 0;
-		
 		byte[] b = new String(data).getBytes();
 
 		for (int i = 0; i < b.length; i++) {
