@@ -10,15 +10,14 @@ import java.util.*;
  * Package terminates with 0xD,0xA sequence.
  */
 
-public class GPSDataReader extends Reader {
+public class GPSDataReader extends FilterReader {
 
-	private Reader in;
 	private static int BUFFER_SIZE = 255;
 	char[] buffer;
 	int index;
 	
 	protected GPSDataReader(Reader in) {
-		this.in = in;
+		super(in);
 	}
 
 	public GPSDataPackage readGPSData() throws IOException {
@@ -67,13 +66,5 @@ public class GPSDataReader extends Reader {
 				return true;
 		}
 		return false;
-	}
-
-	public void close() throws IOException {
-		in.close();
-	}
-
-	public int read(char[] arg0, int arg1, int arg2) throws IOException {
-		return in.read(arg0, arg1, arg2);
 	}
 }
