@@ -71,6 +71,9 @@ public class GPSDataPackage {
 			case LOGIN_PKG:
 				result = new LoginData(data);
 				break;
+			case STATUS_PKG:
+				result = new StatusData(data);
+				break;
 			}
 		return result;
 	}
