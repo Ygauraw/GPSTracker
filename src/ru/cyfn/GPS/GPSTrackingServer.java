@@ -43,7 +43,8 @@ class ClientHandler implements Runnable {
 		try {
 			while (!clientSocket.isClosed() && (packet = in.readGPSData()) != null) {
 				System.out.print("In:  ");
-				printArray(packet.getRawContent());
+				//printArray(packet.getRawContent());
+				System.out.println(packet);
 				respond(packet);
 			}
 		} catch (IOException e) {
@@ -61,7 +62,8 @@ class ClientHandler implements Runnable {
 				out.write(response.getRawContent());
 				out.flush();
 				System.out.print("Out: ");
-				printArray(response.getRawContent());
+				//printArray(response.getRawContent());
+				System.out.println(response);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -80,8 +82,13 @@ class GPSDataPackage {
 	
 	public static final int LOGIN_PKG = 0x01;
 	public static final int STATUS_PKG = 0x13;
-	public static final List<Integer> validTypes = 
-		    Collections.unmodifiableList(Arrays.asList(LOGIN_PKG, STATUS_PKG));
+	public static final Map<Integer, String> typeNames;
+	static {
+        Map<Integer, String> aMap = new HashMap<Integer, String>();
+        aMap.put(LOGIN_PKG, "Login package");
+        aMap.put(STATUS_PKG, "Status package");
+        typeNames = Collections.unmodifiableMap(aMap);
+    }
 	
 	private int packageType;
 	private char[] serialNumber = new char[2];
@@ -146,6 +153,17 @@ class GPSDataPackage {
 		return new GPSDataPackage(packageType, serialNumber);
 	}
 	
+	public String toString() {
+		String result = typeNames.get(this.packageType) + ", CRC check:" + (this.isValid() ? "PASS" : "FAIL");
+		if(dataContent != null) {
+			result = result + ", Data: ";
+			for (Map.Entry<String, String> entry : dataContent.getDataContent().entrySet()) {
+				result = result + entry.getKey() + ": " + entry.getValue() + ",";
+			}
+		}
+		return result;
+	}
+	
 	private boolean isPacketValid(char[] data) {
 		int crc = CRC.getCRC(Arrays.copyOfRange(data, 2, data.length-4));
 		if(data[data.length-3] == (crc & 0xFF) && data[data.length-4] == (crc>>>8))
@@ -182,15 +200,15 @@ class LoginData implements GPSDataContent {
 		String result = "";
 		
 		for (int i = 0; i < deviceID.length; i++) {
-			result = result + String.format("%x", deviceID[i]);
+			result = result + String.format("%X", (int)deviceID[i]);
 		}
-		return result.substring(1);
+		return result;
 	}
 	
 	public LinkedHashMap<String, String> getDataContent() {
 		LinkedHashMap<String, String> result = new LinkedHashMap<String, String>();
 		result.put("Device ID", deviceIdToString());
-		result.put("Type identity code", String.format("0x%X,0x%X",typeIdentityCode[0],typeIdentityCode[1]));
+		result.put("Type identity code", String.format("0x%X,0x%X",(int)typeIdentityCode[0],(int)typeIdentityCode[1]));
 		return result;
 	}	
 }
