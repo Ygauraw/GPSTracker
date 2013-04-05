@@ -6,10 +6,10 @@ import java.net.*;
 public class GPSClientEmulator {
 
 	static public char[] LOGIN_PKG = { 
-		0x78,0x78,0x11,0x1,0x8,0x64,0x71,0x70,0x3,0x64,0x79,0x59,0x10,0x12,0x19,0x2,0x8,0xEF,0x7A,0x16,0xD,0xA 
+		0x78,0x78,0xA,0x13,0x0,0x5,0x3,0x0,0x2,0x8,0xF6,0xD5,0xFC,0xD,0xA, 
 		};
 
-	BufferedInputStream reader;
+	BufferedReader reader;
 	OutputStreamWriter writer;
 	Socket sock;
 	
@@ -42,7 +42,7 @@ public class GPSClientEmulator {
 			//InputStreamReader streamReader = new InputStreamReader(
 			//		sock.getInputStream());
 			//reader = new BufferedReader(streamReader);
-			reader = new BufferedInputStream(sock.getInputStream());
+			reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			writer = new OutputStreamWriter(sock.getOutputStream());
 			System.out.println("networking established");
 		} catch (IOException ex) {
