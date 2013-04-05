@@ -43,7 +43,7 @@ class ClientHandler implements Runnable {
 		try {
 			while (!clientSocket.isClosed() && (packet = in.readGPSData()) != null) {
 				System.out.print("In:  ");
-				printArray(packet.getRawContent());
+				//printArray(packet.getRawContent());
 				System.out.println(packet);
 				respond(packet);
 			}
@@ -62,7 +62,7 @@ class ClientHandler implements Runnable {
 				out.write(response.getRawContent());
 				out.flush();
 				System.out.print("Out: ");
-				printArray(response.getRawContent());
+				//printArray(response.getRawContent());
 				System.out.println(response);
 			} catch (IOException e) {
 				e.printStackTrace();
