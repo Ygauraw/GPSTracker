@@ -17,7 +17,7 @@ class LoginData implements GPSDataContent {
 		typeIdentityCode = Arrays.copyOfRange(rawData, 8, 10);
 	}
 	
-	public char[] toRawChars() {
+	public byte[] toRawBytes() {
 		return null;
 	}
 	
