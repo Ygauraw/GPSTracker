@@ -37,14 +37,12 @@ public abstract class CRC {
 		    0x7bc7, 0x6a4e, 0x58d5, 0x495c, 0x3de3, 0x2c6a, 0x1ef1, 0x0f78,
 		};
 	
-	public static int getCRC_ITU(char[] data)
+	public static int getCRC_ITU(byte[] data)
 	{
 		int crc = 0xFFFF; // Initialize
 		int dataIndex = 0;
-		byte[] b = new String(data).getBytes();
-
-		for (int i = 0; i < b.length; i++) {
-			crc =  (crc >>> 8) ^ crctab16[(crc ^ b[dataIndex]) & 0xFF];
+		for (int i = 0; i < data.length; i++) {
+			crc =  (crc >>> 8) ^ crctab16[(crc ^ data[dataIndex]) & 0xFF];
 			dataIndex++;
 		}
 		

@@ -9,10 +9,10 @@ import java.util.*;
  */
 
 class LoginData implements GPSDataContent {
-	private char[] deviceID;
-	private char[] typeIdentityCode;
+	private byte[] deviceID;
+	private byte[] typeIdentityCode;
 	
-	public LoginData(char[] rawData) {
+	public LoginData(byte[] rawData) {
 		deviceID = Arrays.copyOfRange(rawData, 0, 8);
 		typeIdentityCode = Arrays.copyOfRange(rawData, 8, 10);
 	}

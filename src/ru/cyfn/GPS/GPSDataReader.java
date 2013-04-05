@@ -10,19 +10,19 @@ import java.util.*;
  * Package terminates with 0xD,0xA sequence.
  */
 
-public class GPSDataReader extends FilterReader {
+public class GPSDataReader extends FilterInputStream {
 
 	private static int BUFFER_SIZE = 255;
-	char[] buffer;
+	byte[] buffer;
 	int index;
 	
-	protected GPSDataReader(Reader in) {
+	protected GPSDataReader(InputStream in) {
 		super(in);
 	}
 
 	public GPSDataPackage readGPSData() throws IOException {
 		
-		buffer = new char[BUFFER_SIZE];
+		buffer = new byte[BUFFER_SIZE];
 		int data;
 		index = 0;
 		int start = -1;
@@ -30,7 +30,8 @@ public class GPSDataReader extends FilterReader {
 		
 		
 		while((data = in.read()) != -1) {
-			buffer[index] = (char)data;
+			buffer[index] = (byte)(data & 0xFF);
+			//System.out.print(String.format("%X.", data));
 			if(start == -1 && hasValidStartBits()) {			// if start bits found set start and end of a pkg
 				start = index - 2;
 				end = start + buffer[index] + 5;
@@ -48,7 +49,7 @@ public class GPSDataReader extends FilterReader {
 		return null;
 	}
 
-	private GPSDataPackage createGPSDataPackage(char[] data) {
+	private GPSDataPackage createGPSDataPackage(byte[] data) {
 		return new GPSDataPackage(data);
 	}
 

@@ -6,18 +6,20 @@ public class GPSDataPackage {
 	
 	public static final int LOGIN_PKG = 0x01;
 	public static final int STATUS_PKG = 0x13;
+	public static final int LBS_EXT_PKG = 0x18;
 	public static final Map<Integer, String> typeNames;
 	static {
         Map<Integer, String> aMap = new HashMap<Integer, String>();
-        aMap.put(LOGIN_PKG, "Login package");
-        aMap.put(STATUS_PKG, "Status package");
+        aMap.put(LOGIN_PKG, "Login Package");
+        aMap.put(STATUS_PKG, "Status Package");
+        aMap.put(LBS_EXT_PKG, "LBS Extend Information Package");
         typeNames = Collections.unmodifiableMap(aMap);
     }
 	
 	private int packageType;
-	private char[] serialNumber = new char[2];
+	private byte[] serialNumber = new byte[2];
 	private boolean validCRC;
-	private char[] rawContent;
+	private byte[] rawContent;
 	private GPSDataContent dataContent;
 	
 	public int getType() {
@@ -26,28 +28,28 @@ public class GPSDataPackage {
 	public boolean isValid() {
 		return validCRC;
 	}
-	public char[] getRawContent() {
+	public byte[] getRawContent() {
 		return Arrays.copyOf(rawContent, rawContent.length);
 	}
 	public LinkedHashMap<String, String> getDataContent() {
 		return dataContent.getDataContent();
 	}
-	public GPSDataPackage(char[] data) {
+	public GPSDataPackage(byte[] data) {
 		rawContent = Arrays.copyOf(data, data.length);
 		init();
 	}
 	
-	private GPSDataPackage(int type, char[] serialNum) {
-		char[] result = new char[10];
+	private GPSDataPackage(int type, byte[] serialNum) {
+		byte[] result = new byte[10];
 		result[0] = 0x78;
 		result[1] = 0x78;
 		result[2] = 0x5;
-		result[3] = (char)type;
+		result[3] = (byte)type;
 		result[4] = serialNum[0];
 		result[5] = serialNum[1];
 		int crc = CRC.getCRC_ITU(Arrays.copyOfRange(result, 2, 6));
-		result[6] = (char)((crc & 0xFF00)>>>8);
-		result[7] = (char)(crc & 0xFF);
+		result[6] = (byte)((crc>>>8) & 0xFF);
+		result[7] = (byte)(crc & 0xFF);
 		result[8] = 0xD;
 		result[9] = 0xA;
 		rawContent = result;
@@ -62,7 +64,7 @@ public class GPSDataPackage {
 		dataContent = constructDataContent(packageType, Arrays.copyOfRange(rawContent, 4, rawContent.length - 6));
 	}
 	
-	private GPSDataContent constructDataContent(int type, char[] data) {
+	private GPSDataContent constructDataContent(int type, byte[] data) {
 		GPSDataContent result = null;
 		if(data.length == 0) return null;
 			switch (type) {
@@ -88,9 +90,9 @@ public class GPSDataPackage {
 		return result;
 	}
 	
-	private boolean isPacketValid(char[] data) {
+	private boolean isPacketValid(byte[] data) {
 		int crc = CRC.getCRC_ITU(Arrays.copyOfRange(data, 2, data.length-4));
-		if(data[data.length-3] == (crc & 0xFF) && data[data.length-4] == (crc>>>8))
+		if(data[data.length-3] == (byte)(crc & 0xFF) && data[data.length-4] == (byte)(crc>>>8))
 			return true;
 		return false;
 	}

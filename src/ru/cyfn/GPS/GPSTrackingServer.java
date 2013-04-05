@@ -31,7 +31,7 @@ class ClientHandler implements Runnable {
 	public ClientHandler(Socket socket) {
 		try {
 			clientSocket = socket;
-			in = new GPSDataReader(new BufferedReader(new InputStreamReader(clientSocket.getInputStream())));
+			in = new GPSDataReader(new BufferedInputStream(clientSocket.getInputStream()));
 			System.out.println("Connection from IP: " + clientSocket.getInetAddress().getHostAddress());
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -43,7 +43,7 @@ class ClientHandler implements Runnable {
 		try {
 			while (!clientSocket.isClosed() && (packet = in.readGPSData()) != null) {
 				System.out.print("In:  ");
-				//printArray(packet.getRawContent());
+				printArray(packet.getRawContent());
 				System.out.println(packet);
 				respond(packet);
 			}
@@ -54,15 +54,15 @@ class ClientHandler implements Runnable {
 	}
 	
 	private void respond(GPSDataPackage packet) {
-		OutputStreamWriter out;
+		BufferedOutputStream out;
 		if(packet.getType() == GPSDataPackage.LOGIN_PKG || packet.getType() == GPSDataPackage.STATUS_PKG) {
 			GPSDataPackage response = packet.createResponse();
 			try {
-				out = new OutputStreamWriter(clientSocket.getOutputStream());
+				out = new BufferedOutputStream(clientSocket.getOutputStream());
 				out.write(response.getRawContent());
 				out.flush();
 				System.out.print("Out: ");
-				//printArray(response.getRawContent());
+				printArray(response.getRawContent());
 				System.out.println(response);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -70,9 +70,9 @@ class ClientHandler implements Runnable {
 		}
 	}
 	
-	void printArray(char[] array) {
+	void printArray(byte[] array) {
 		for (int i = 0; i < array.length; i++) {
-			System.out.print(String.format("0x%X,", (int) array[i]));
+			System.out.print(String.format("0x%X,", array[i]));
 		}
 		System.out.println("");
 	}
