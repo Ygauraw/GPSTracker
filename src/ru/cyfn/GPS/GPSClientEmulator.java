@@ -5,12 +5,12 @@ import java.net.*;
 
 public class GPSClientEmulator {
 
-	static public char[] LOGIN_PKG = { 
-		0x78,0x78,0x11,0x1,0x8,0x64,0x71,0x70,0x3,0x64,0x79,0x59,0x10,0x12,0x19,0x2,0x8,0xF3,0x59,0x4,0xD,0xA,
+	static public byte[] LOGIN_PKG = { 
+		0x78,0x78,0xA,0x13,0x0,0x5,0x4,0x0,0x2,0xE,0x12,(byte)0xA1,(byte)0xD3,0xD,0xA,
 		};
 
-	BufferedReader reader;
-	OutputStreamWriter writer;
+	BufferedInputStream reader;
+	BufferedOutputStream writer;
 	Socket sock;
 	
 	public static void main(String[] args) {
@@ -23,14 +23,6 @@ public class GPSClientEmulator {
 
 		Thread readerThread = new Thread(new IncomingReader());
 		readerThread.start();
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		sendMessage(LOGIN_PKG);
 
 	}
@@ -39,21 +31,16 @@ public class GPSClientEmulator {
 		try {
 			//sock = new Socket("183.60.142.137", 8827);					// coomix free GPS tracking service
 			sock = new Socket("127.0.0.1", 5000);						// local server
-			//InputStreamReader streamReader = new InputStreamReader(
-			//		sock.getInputStream());
-			//reader = new BufferedReader(streamReader);
-			reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			writer = new OutputStreamWriter(sock.getOutputStream());
+			reader = new BufferedInputStream(sock.getInputStream());
+			writer = new BufferedOutputStream(sock.getOutputStream());
 			System.out.println("networking established");
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	public void sendMessage(char[] message) {
+	public void sendMessage(byte[] message) {
 		try {
-			//writer.print(message);
-			//writer.flush();
 			writer.write(message);
 			writer.flush();
 			System.out.println("Message sent");
@@ -77,9 +64,9 @@ public class GPSClientEmulator {
 			
 		}
 
-		void printArray(char[] array) {
+		void printArray(byte[] array) {
 			for (int i = 0; i < array.length; i++) {
-				System.out.print(String.format("0x%X,", (int) array[i]));
+				System.out.print(String.format("0x%X,", array[i]));
 			}
 			System.out.println("");
 		}
