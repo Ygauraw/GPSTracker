@@ -3,12 +3,19 @@ package ru.cyfn.GPS;
 import java.util.*;
 
 /*
- * LoginData
- * Device ID - 8 chars
- * Type identity code - 2 chars
+ * StatusData
+ * Device info - 1 byte
+ * 		0 bit - reserved
+ * 		1 bit - reserved
+ * 		2 bit - reserved
+ * 		3,4,5 bits - 011:Low-power alarm, 100:SOS
+ * 		6 bit - 1:GPS has located, 0:GPS hasn't located
+ * 		7 bit - reserved
+ * Voltage degree - 1 byte
+ * GSM signal strength degree - 1 byte
  */
 
-class StatusData implements GPSDataContent {
+class StatusData extends GPSDataContent {
 	private byte deviceInfo;
 	private byte voltageDegree;
 	private byte GSMSignalStrenth;
@@ -26,6 +33,8 @@ class StatusData implements GPSDataContent {
 	private String deviceInfoToString() {
 		String result = "!!!";
 		// TODO read bits
+		// 		3,4,5 bits - 011:Low-power alarm, 100:SOS
+		// 		6 bit - 1:GPS has located, 0:GPS hasn't located
 		return result;
 	}
 	
