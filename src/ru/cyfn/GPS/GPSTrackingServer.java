@@ -55,15 +55,16 @@ class ClientHandler implements Runnable {
 	
 	private void respond(GPSDataPackage packet) {
 		BufferedOutputStream out;
-		if(packet.getType() == GPSDataPackage.LOGIN_PKG || packet.getType() == GPSDataPackage.STATUS_PKG) {
+		// responds to all packages
+		if(true /*packet.getType() == GPSDataPackage.LOGIN_PKG || packet.getType() == GPSDataPackage.STATUS_PKG*/) {
 			GPSDataPackage response = packet.createResponse();
 			try {
 				out = new BufferedOutputStream(clientSocket.getOutputStream());
 				out.write(response.getRawContent());
 				out.flush();
-				System.out.print("Out: ");
+				//System.out.print("Out: ");
 				//printArray(response.getRawContent());
-				System.out.println(response);
+				//System.out.println(response);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -44,8 +44,8 @@ class LBSExtData extends GPSDataContent {
 		for (int i = 0; i < dateTime.length; i++) {
 			tmp += dateTime[i];
 		}
-		if(tmp>0)
-			result = dateTime.toString();
+		if(tmp<0)
+			result = "";
 		
 		return result;
 	}
