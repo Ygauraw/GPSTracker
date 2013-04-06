@@ -13,6 +13,17 @@ public class GPSDataPackage {
         aMap.put(LOGIN_PKG, "Login Package");
         aMap.put(STATUS_PKG, "Status Package");
         aMap.put(LBS_EXT_PKG, "LBS Extend Information Package");
+        aMap.put(0x10, "0x10");
+        aMap.put(0x11, "0x11");
+        aMap.put(0x12, "0x12");
+        aMap.put(0x14, "0x14");
+        aMap.put(0x15, "0x15");
+        aMap.put(0x16, "0x16");
+        aMap.put(0x17, "0x17");
+        aMap.put(0x19, "0x19");
+        aMap.put(0x1A, "0x1A");
+        aMap.put(0x80, "0x80");
+        aMap.put(0x81, "0x81");
         typeNames = Collections.unmodifiableMap(aMap);
     }
 	
@@ -76,6 +87,9 @@ public class GPSDataPackage {
 				break;
 			case LBS_EXT_PKG:
 				result = new LBSExtData(data);
+				break;
+			default:
+				result = new GenericData(data);
 				break;
 			}
 		return result;
