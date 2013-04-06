@@ -100,7 +100,16 @@ public class GPSDataPackage {
 	}
 	
 	public String toString() {
-		String result = typeNames.get(this.packageType) + ", CRC check:" + (this.isValid() ? "PASS" : "FAIL");
+		String result = "";
+		if(typeNames.containsKey(this.packageType)) 
+			result += typeNames.get(this.packageType);
+		else
+			result += "Unknown package";
+		
+		result += " (" + String.format("%X",this.packageType) + ")";
+		if(!this.isValid())
+			result += ", CRC FAIL!";
+
 		if(dataContent != null) {
 			result = result + ", Data: ";
 			for (Map.Entry<String, String> entry : dataContent.getDataContent().entrySet()) {
