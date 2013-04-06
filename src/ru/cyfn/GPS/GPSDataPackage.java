@@ -74,6 +74,9 @@ public class GPSDataPackage {
 			case STATUS_PKG:
 				result = new StatusData(data);
 				break;
+			case LBS_EXT_PKG:
+				result = new LBSExtData(data);
+				break;
 			}
 		return result;
 	}
