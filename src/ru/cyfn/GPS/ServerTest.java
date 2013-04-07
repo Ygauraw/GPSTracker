@@ -1,5 +1,7 @@
 package ru.cyfn.GPS;
 
+import java.util.*;
+
 public class ServerTest {
 
 	public static void main(String[] args) {
@@ -8,6 +10,8 @@ public class ServerTest {
 	}
 	
 	private static void CRCTest() {
+		
+		System.out.println(String.format("%tY-%<tm-%<td %<tH:%<tM:%<tS",new Date()));
 		  byte[] array = { 
 				  			0x5,0x13,0xE,0xE
 		  				 };
