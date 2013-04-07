@@ -7,12 +7,13 @@ import java.util.*;
  * 
  */
 
-class GPSData extends GPSDataContent {
+class GPSData extends DataContent {
 
 	private int numbreOfSatellites;
 	private int latitude;
 	private int longitude;
-	private int speed;
+	private int speed;				// in km/h
+	private int course;
 	
 	public GPSData(byte[] rawData) {
 
@@ -20,6 +21,7 @@ class GPSData extends GPSDataContent {
 		latitude = convertBytesToIntUnsigned(Arrays.copyOfRange(rawData, 1, 5)) / 30000 / 60;
 		longitude = convertBytesToIntUnsigned(Arrays.copyOfRange(rawData, 5, 9)) / 30000 / 60;
 		speed = ((int)rawData[9]) & 0xFF;
+		//course = 
 	}
 	
 	public byte[] toRawBytes() {

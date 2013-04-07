@@ -15,7 +15,7 @@ import java.util.*;
  * GSM signal strength degree - 1 byte
  */
 
-class StatusData extends GPSDataContent {
+class StatusData extends DataContent {
 	private byte deviceInfo;
 	private byte voltageDegree;
 	private byte GSMSignalStrenth;

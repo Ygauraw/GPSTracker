@@ -8,7 +8,7 @@ import java.util.*;
  * Type identity code - 2 chars
  */
 
-class LoginData extends GPSDataContent {
+class LoginData extends DataContent {
 	private byte[] deviceID;
 	private byte[] typeIdentityCode;
 	

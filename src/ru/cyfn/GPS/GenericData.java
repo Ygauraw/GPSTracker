@@ -2,7 +2,7 @@ package ru.cyfn.GPS;
 
 import java.util.*;
 
-class GenericData extends GPSDataContent {
+class GenericData extends DataContent {
 	private byte[] data;
 	
 	public GenericData(byte[] rawData) {

@@ -33,7 +33,7 @@ public class GPSDataPackage {
 	private byte[] serialNumber = new byte[2];
 	private boolean validCRC;
 	private byte[] rawContent;
-	private GPSDataContent dataContent;
+	private DataContent dataContent;
 	
 	public int getType() {
 		return packageType;
@@ -77,8 +77,8 @@ public class GPSDataPackage {
 		dataContent = constructDataContent(packageType, Arrays.copyOfRange(rawContent, 4, rawContent.length - 6));
 	}
 	
-	private GPSDataContent constructDataContent(int type, byte[] data) {
-		GPSDataContent result = null;
+	private DataContent constructDataContent(int type, byte[] data) {
+		DataContent result = null;
 		if(data.length == 0) return null;
 			switch (type) {
 			case LOGIN_PKG:

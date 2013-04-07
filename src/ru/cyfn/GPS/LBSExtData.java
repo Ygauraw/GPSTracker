@@ -2,10 +2,10 @@ package ru.cyfn.GPS;
 
 import java.util.*;
 
-class LBSExtData extends GPSDataContent {
+class LBSExtData extends DataContent {
 
-	private GPSDataContent dateTime;
-	private GPSDataContent lbsData;
+	private DataContent dateTime;
+	private DataContent lbsData;
 	
 	public LBSExtData(byte[] rawData) {
 		dateTime = new DateTimeData(Arrays.copyOfRange(rawData, 0, 6));

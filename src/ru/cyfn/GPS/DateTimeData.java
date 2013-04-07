@@ -2,7 +2,7 @@ package ru.cyfn.GPS;
 
 import java.util.*;
 
-class DateTimeData extends GPSDataContent {
+class DateTimeData extends DataContent {
 	
 	private Calendar cal;
 	

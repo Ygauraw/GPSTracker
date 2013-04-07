@@ -3,11 +3,11 @@ package ru.cyfn.GPS;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 
-class GPSLBSExtData extends GPSDataContent {
+class GPSLBSExtData extends DataContent {
 
-	private GPSDataContent dateTime;
-	private GPSDataContent gpsData;
-	private GPSDataContent lbsData;
+	private DataContent dateTime;
+	private DataContent gpsData;
+	private DataContent lbsData;
 	
 	public GPSLBSExtData(byte[] rawData) {
 		int gpsDataLength = ((int)rawData[6] >>> 4) & 0x0F;

@@ -12,7 +12,7 @@ import java.util.*;
  * RSSI - 1
  */
 
-class LBSData extends GPSDataContent {
+class LBSData extends DataContent {
 	private int mcc;
 	private int mnc;
 	private CellInfo mainCell;

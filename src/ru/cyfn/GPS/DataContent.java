@@ -2,7 +2,7 @@ package ru.cyfn.GPS;
 
 import java.util.*;
 
-abstract class GPSDataContent {
+abstract class DataContent {
 	public abstract byte[] toRawBytes();
 	public abstract LinkedHashMap<String, String> getDataContent();
 	protected int convertBytesToIntUnsigned(byte[] bytes) {
