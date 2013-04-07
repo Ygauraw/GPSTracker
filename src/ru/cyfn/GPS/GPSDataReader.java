@@ -42,6 +42,7 @@ public class GPSDataReader extends FilterInputStream {
 				} else {										// else reset start and end positions
 					start = -1;
 					end = BUFFER_SIZE;
+					// TODO: Report a failed data received.
 				}
 			}
 			index++;
