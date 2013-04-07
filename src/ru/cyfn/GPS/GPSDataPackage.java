@@ -7,12 +7,14 @@ public class GPSDataPackage {
 	public static final int LOGIN_PKG = 0x01;
 	public static final int STATUS_PKG = 0x13;
 	public static final int LBS_EXT_PKG = 0x18;
+	public static final int GPS_LBS_PKG = 0x1E;
 	public static final Map<Integer, String> typeNames;
 	static {
         Map<Integer, String> aMap = new HashMap<Integer, String>();
         aMap.put(LOGIN_PKG, "Login Package");
         aMap.put(STATUS_PKG, "Status Package");
         aMap.put(LBS_EXT_PKG, "LBS Extend Information Package");
+        aMap.put(GPS_LBS_PKG, "LBS+GPS Information Package");       
         aMap.put(0x10, "0x10");
         aMap.put(0x11, "0x11");
         aMap.put(0x12, "0x12");
@@ -87,6 +89,9 @@ public class GPSDataPackage {
 				break;
 			case LBS_EXT_PKG:
 				result = new LBSExtData(data);
+				break;
+			case GPS_LBS_PKG:
+				result = new GPSLBSExtData(data);
 				break;
 			default:
 				result = new GenericData(data);
