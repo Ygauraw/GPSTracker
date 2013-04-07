@@ -42,7 +42,7 @@ class ClientHandler implements Runnable {
 		GPSDataPackage packet;
 		try {
 			while (!clientSocket.isClosed() && (packet = in.readGPSData()) != null) {
-				System.out.print("In:  ");
+				System.out.print(String.format("%tY-%<tm-%<td %<tH:%<tM:%<tS In:  ",new Date()));
 				//printArray(packet.getRawContent());
 				System.out.println(packet);
 				respond(packet);
