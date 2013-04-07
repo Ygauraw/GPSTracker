@@ -31,7 +31,7 @@ class StatusData extends GPSDataContent {
 	}
 	
 	private String deviceInfoToString() {
-		String result = "!!!";
+		String result = String.format("0x%X", deviceInfo);
 		// TODO read bits
 		// 		3,4,5 bits - 011:Low-power alarm, 100:SOS
 		// 		6 bit - 1:GPS has located, 0:GPS hasn't located
