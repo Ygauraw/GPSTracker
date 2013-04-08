@@ -1,6 +1,6 @@
 package ru.cyfn.GPS;
 
-import ru.cyfn.GPSTrackingServer.*;
+import ru.cyfn.GPSTrackingServer.GPSTrackingServer;
 
 public class ServerTest {
 

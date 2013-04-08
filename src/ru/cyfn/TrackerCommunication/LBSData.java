@@ -1,4 +1,4 @@
-package ru.cyfn.GPS;
+package ru.cyfn.TrackerCommunication;
 
 import java.util.*;
 

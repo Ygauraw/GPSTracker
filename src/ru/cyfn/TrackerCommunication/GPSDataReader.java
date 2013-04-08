@@ -1,4 +1,4 @@
-package ru.cyfn.GPS;
+package ru.cyfn.TrackerCommunication;
 
 import java.io.*;
 import java.util.*;
@@ -16,7 +16,7 @@ public class GPSDataReader extends FilterInputStream {
 	byte[] buffer;
 	int index;
 	
-	protected GPSDataReader(InputStream in) {
+	public GPSDataReader(InputStream in) {
 		super(in);
 	}
 

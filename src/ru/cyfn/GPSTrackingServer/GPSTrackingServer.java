@@ -1,8 +1,11 @@
-package ru.cyfn.GPS;
+package ru.cyfn.GPSTrackingServer;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
+
+import ru.cyfn.TrackerCommunication.GPSDataPackage;
+import ru.cyfn.TrackerCommunication.GPSDataReader;
 
 public class GPSTrackingServer {
 	ArrayList<Socket> clientSockets;

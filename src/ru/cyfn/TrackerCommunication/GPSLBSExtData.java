@@ -1,7 +1,6 @@
-package ru.cyfn.GPS;
+package ru.cyfn.TrackerCommunication;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 class GPSLBSExtData extends DataContent {
 

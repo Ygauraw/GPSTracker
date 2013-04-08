@@ -1,6 +1,6 @@
-package ru.cyfn.GPS;
+package ru.cyfn.TrackerCommunication;
 
-public abstract class CRC {
+abstract class CRC {
 	private static int[] crctab16 = 
 		{
 		    0x0000, 0x1189, 0x2312, 0x329b, 0x4624, 0x57ad, 0x6536, 0x74bf,
