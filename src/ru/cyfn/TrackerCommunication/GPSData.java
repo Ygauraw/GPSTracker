@@ -16,7 +16,7 @@ class GPSData extends DataContent {
 	private int course;
 	
 	public GPSData(byte[] rawData) {
-
+		super(rawData);
 		numbreOfSatellites = rawData[0] & 0xF;
 		latitude = convertBytesToIntUnsigned(Arrays.copyOfRange(rawData, 1, 5)) / 30000 / 60;
 		longitude = convertBytesToIntUnsigned(Arrays.copyOfRange(rawData, 5, 9)) / 30000 / 60;

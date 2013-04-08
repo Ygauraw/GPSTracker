@@ -13,6 +13,7 @@ class LoginData extends DataContent {
 	private byte[] typeIdentityCode;
 	
 	public LoginData(byte[] rawData) {
+		super(rawData);
 		deviceID = Arrays.copyOfRange(rawData, 0, 8);
 		typeIdentityCode = Arrays.copyOfRange(rawData, 8, 10);
 	}

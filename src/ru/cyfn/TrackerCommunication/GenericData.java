@@ -6,6 +6,7 @@ class GenericData extends DataContent {
 	private byte[] data;
 	
 	public GenericData(byte[] rawData) {
+		super(rawData);
 		data = rawData;
 	}
 	

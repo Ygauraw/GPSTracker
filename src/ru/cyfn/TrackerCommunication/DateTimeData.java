@@ -7,6 +7,7 @@ class DateTimeData extends DataContent {
 	private Calendar cal;
 	
 	public DateTimeData(byte[] rawData) {
+		super(rawData);
 		if(rawData[1] != 0) {						// check if date present
 			cal = Calendar.getInstance();
 			cal.set(((int)rawData[0])&0xFF + 2000,

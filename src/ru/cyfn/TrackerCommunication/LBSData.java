@@ -19,6 +19,7 @@ class LBSData extends DataContent {
 	private CellInfo[] neighborCells = new CellInfo[6];
 	
 	public LBSData(byte[] rawData) {
+		super(rawData);
 		mcc = convertBytesToIntUnsigned(Arrays.copyOfRange(rawData, 0, 2));
 		mnc = convertBytesToIntUnsigned(Arrays.copyOfRange(rawData, 2, 3));
 		mainCell = new CellInfo();

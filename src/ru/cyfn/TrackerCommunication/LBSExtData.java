@@ -8,6 +8,7 @@ class LBSExtData extends DataContent {
 	private DataContent lbsData;
 	
 	public LBSExtData(byte[] rawData) {
+		super(rawData);
 		dateTime = new DateTimeData(Arrays.copyOfRange(rawData, 0, 6));
 		lbsData = new LBSData(Arrays.copyOfRange(rawData, 6, rawData.length));
 	}

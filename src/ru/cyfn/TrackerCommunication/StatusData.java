@@ -21,6 +21,7 @@ class StatusData extends DataContent {
 	private byte GSMSignalStrenth;
 	
 	public StatusData(byte[] rawData) {
+		super(rawData);
 		deviceInfo = rawData[0];
 		voltageDegree = rawData[1];
 		GSMSignalStrenth = rawData[2];

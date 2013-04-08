@@ -9,6 +9,7 @@ class GPSLBSExtData extends DataContent {
 	private DataContent lbsData;
 	
 	public GPSLBSExtData(byte[] rawData) {
+		super(rawData);
 		int gpsDataLength = ((int)rawData[6] >>> 4) & 0x0F;
 		dateTime = new DateTimeData(Arrays.copyOfRange(rawData, 0, 6));
 		gpsData = new GPSData(Arrays.copyOfRange(rawData, 6, gpsDataLength + 6));
