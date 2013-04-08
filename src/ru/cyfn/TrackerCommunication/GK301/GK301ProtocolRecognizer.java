@@ -16,7 +16,7 @@ public class GK301ProtocolRecognizer extends ProtocolRecognizer {
 	}
 
 	public String getProtocolName() {
-		return "GK301 GPS Kids’ Phone Communication Protocol";
+		return "GK301 GPS Kids' Phone Communication Protocol";
 		
 	}
 
