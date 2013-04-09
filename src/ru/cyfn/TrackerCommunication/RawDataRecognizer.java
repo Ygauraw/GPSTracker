@@ -1,8 +1,6 @@
 package ru.cyfn.TrackerCommunication;
 
-import java.security.acl.LastOwnerException;
-import java.util.Collections;
-import java.util.TreeSet;
+import java.util.*;
 
 public class RawDataRecognizer {
 
@@ -34,6 +32,7 @@ public class RawDataRecognizer {
 	}
 	
 	public GPSDataPackage createDataPackage(byte[] rawData) {
-		return null;
+		
+		return (recognizedType == null) ? null : recognizedType.createDataPackage(rawData);
 	}
 }
