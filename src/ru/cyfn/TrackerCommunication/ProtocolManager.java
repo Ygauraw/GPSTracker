@@ -6,19 +6,19 @@ import ru.cyfn.TrackerCommunication.GK301.GK301ProtocolRecognizer;
 
 public class ProtocolManager {
 
-	private TreeSet<Class> registredRecognizers;
+	private TreeSet<Class<? extends ProtocolRecognizer>> registredRecognizers;
 	
 	public ProtocolManager() {
 		registerKnownProtocolRecognizers();
 	}
 	
-	public <T extends ProtocolRecognizer> void registerProtocolRecognizer(Class<T> recognizer) {
+	public  void registerProtocolRecognizer(Class<? extends ProtocolRecognizer> recognizer) {
 		registredRecognizers.add(recognizer);
 	}
 	
 	public RawDataRecognizer getRawDataRecognizer() {
 		TreeSet<ProtocolRecognizer> recognizers = new TreeSet<ProtocolRecognizer>();
-		for (Class<ProtocolRecognizer> recognizer : registredRecognizers) {
+		for (Class<? extends ProtocolRecognizer> recognizer : registredRecognizers) {
 			try {
 				recognizers.add(recognizer.newInstance());
 			} catch (Exception e) {
