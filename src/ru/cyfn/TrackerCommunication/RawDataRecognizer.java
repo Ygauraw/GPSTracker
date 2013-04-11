@@ -31,7 +31,7 @@ public class RawDataRecognizer {
 		return recognized;
 	}
 	
-	public GPSDataPackage createDataPackage(byte[] rawData) {
+	public DataPackage createDataPackage(byte[] rawData) {
 		
 		return (recognizedType == null) ? null : recognizedType.createDataPackage(rawData);
 	}

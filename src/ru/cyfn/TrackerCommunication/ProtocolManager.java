@@ -33,4 +33,8 @@ public class ProtocolManager {
 		registerProtocolRecognizer(GK301ProtocolRecognizer.class);
 		
 	}
+	
+	public DataPackage createDataPackage(char[] data) {
+		return null;
+	}
 }

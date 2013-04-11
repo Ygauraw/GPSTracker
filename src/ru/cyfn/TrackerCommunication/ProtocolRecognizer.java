@@ -3,7 +3,7 @@ package ru.cyfn.TrackerCommunication;
 
 public class ProtocolRecognizer{
 	// creates appropriate concrete subclass of DataPackage
-	public GPSDataPackage createDataPackage(byte[] rawData) {
+	public DataPackage createDataPackage(byte[] rawData) {
 		return null;
 	}
 	

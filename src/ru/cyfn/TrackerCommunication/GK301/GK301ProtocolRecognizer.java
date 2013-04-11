@@ -1,11 +1,11 @@
 package ru.cyfn.TrackerCommunication.GK301;
 
-import ru.cyfn.TrackerCommunication.GPSDataPackage;
+import ru.cyfn.TrackerCommunication.DataPackage;
 import ru.cyfn.TrackerCommunication.ProtocolRecognizer;
 
 public class GK301ProtocolRecognizer extends ProtocolRecognizer {
 
-	public GPSDataPackage createDataPackage(byte[] rawData) {
+	public DataPackage createDataPackage(byte[] rawData) {
 		// TODO Auto-generated method stub
 		return null;
 	}

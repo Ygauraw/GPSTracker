@@ -2,7 +2,7 @@ package ru.cyfn.TrackerCommunication;
 
 import java.util.*;
 
-public class GPSDataPackage {
+public class GPSDataPackage extends DataPackage{
 	
 	public static final int LOGIN_PKG = 0x01;
 	public static final int STATUS_PKG = 0x13;
@@ -44,15 +44,19 @@ public class GPSDataPackage {
 	public byte[] getRawContent() {
 		return Arrays.copyOf(rawContent, rawContent.length);
 	}
-	public LinkedHashMap<String, String> getDataContent() {
+	public Map<String, String> getDataContent() {
 		return dataContent.getDataContent();
 	}
+	
+	// !!! make in private !!!
 	public GPSDataPackage(byte[] data) {
+		super(data);
 		rawContent = Arrays.copyOf(data, data.length);
 		init();
 	}
 	
 	private GPSDataPackage(int type, byte[] serialNum) {
+		super(null);
 		byte[] result = new byte[10];
 		result[0] = 0x78;
 		result[1] = 0x78;
